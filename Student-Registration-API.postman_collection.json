@@ -1,0 +1,154 @@
+{
+  "info": {
+    "_postman_id": "647d43ab-ad37-4f5a-8b6a-b58bffc52345",
+    "name": "Student Registration API",
+    "description": "CRUD routes for the Student Registration backend (Express + better-sqlite3).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "00000000"
+  },
+  "item": [
+    {
+      "name": "Create - Register a new student",
+      "id": "a1000001-0000-4000-8000-000000000001",
+      "protocolProfileBehavior": {},
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json", "type": "text" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Jane Doe\",\n  \"email\": \"jane.doe@example.com\",\n  \"phone\": \"9876543210\",\n  \"course\": \"B.Sc Computer Science\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "{{base_url}}/students",
+          "host": ["{{base_url}}"],
+          "path": ["students"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create - Duplicate email (should fail with 409)",
+      "id": "a1000002-0000-4000-8000-000000000002",
+      "protocolProfileBehavior": {},
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json", "type": "text" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Jane Duplicate\",\n  \"email\": \"jane.doe@example.com\",\n  \"course\": \"B.A History\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "{{base_url}}/students",
+          "host": ["{{base_url}}"],
+          "path": ["students"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create - Missing required field (should fail with 400)",
+      "id": "a1000003-0000-4000-8000-000000000003",
+      "protocolProfileBehavior": {},
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json", "type": "text" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"No Email Student\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "{{base_url}}/students",
+          "host": ["{{base_url}}"],
+          "path": ["students"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Read - Get all students (paginated + search)",
+      "id": "a1000004-0000-4000-8000-000000000004",
+      "protocolProfileBehavior": {},
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/students?page=1&limit=5&search=",
+          "host": ["{{base_url}}"],
+          "path": ["students"],
+          "query": [
+            { "key": "page", "value": "1" },
+            { "key": "limit", "value": "5" },
+            { "key": "search", "value": "" }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Read - Get a single student by id",
+      "id": "a1000005-0000-4000-8000-000000000005",
+      "protocolProfileBehavior": {},
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/students/{{student_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["students", "{{student_id}}"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update - Edit a student by id",
+      "id": "a1000006-0000-4000-8000-000000000006",
+      "protocolProfileBehavior": {},
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json", "type": "text" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"phone\": \"9999999999\",\n  \"course\": \"M.Sc Computer Science\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "{{base_url}}/students/{{student_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["students", "{{student_id}}"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete - Remove a student by id",
+      "id": "a1000007-0000-4000-8000-000000000007",
+      "protocolProfileBehavior": {},
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/students/{{student_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["students", "{{student_id}}"]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:5000", "type": "string" },
+    { "key": "student_id", "value": "1", "type": "string" }
+  ]
+}
